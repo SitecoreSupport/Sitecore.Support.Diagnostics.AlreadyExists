@@ -1,0 +1,7 @@
+src/.vs/
+src/packages/
+src/Sitecore.Support.Diagnostics.AlreadyExists/bin/
+src/Sitecore.Support.Diagnostics.AlreadyExists/obj/
+*.pubxml
+*.user
+*.suo
