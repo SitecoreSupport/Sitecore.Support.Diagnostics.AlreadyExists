@@ -128,6 +128,8 @@ namespace Sitecore.Support.Analytics.XConnect.DataAccess
           XConnectDataAdapterProvider.CopySystemData(contact.System, classification);
           xdbContext.SetClassification(contact2, classification);
           xdbContext.Submit();
+
+          SetXConnectClassificationFacet(contact, classification);
         }
         else
         {
@@ -148,6 +150,12 @@ namespace Sitecore.Support.Analytics.XConnect.DataAccess
         } 
         return true;
       });
+    }
+    private void SetXConnectClassificationFacet(IContact contact, Classification classification)
+    {
+      var facets = contact.GetFacet<IXConnectFacets>("XConnectFacets").Facets?.ToDictionary(f => f.Key, f => f.Value) ?? new Dictionary<string, Facet>();
+      facets[CollectionModel.FacetKeys.Classification] = classification;
+      contact.GetFacet<IXConnectFacets>("XConnectFacets").Facets = facets;
     }
 
     private T ExecuteWithExceptionHandling<T>(Func<IXdbContext, T> func)
